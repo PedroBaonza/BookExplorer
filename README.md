@@ -1,87 +1,100 @@
+¡Perfecto! Con base en tu CV, tu app y tu perfil como desarrollador en formación, aquí tienes un **README.md profesional, personalizado y visualmente atractivo** para tu repositorio **Book Explorer** en GitHub:
+
+---
+
+```markdown
 # 📚 Book Explorer
 
-![Banner](https://i.imgur.com/jY7eX2R.png)
-
-## 📖 Descripción
-
-**Book Explorer** es una aplicación Android desarrollada en **Kotlin** que permite explorar y descubrir libros a través de la API pública de [Google Books](https://developers.google.com/books). La aplicación está construida siguiendo la arquitectura **MVVM** y utiliza tecnologías modernas como Retrofit, Kotlin Coroutines, LiveData y Glide.
+**Book Explorer** es una aplicación Android creada como proyecto práctico para explorar libros a través de la API pública de Google Books. Esta app ha sido desarrollada por [Pedro Baonza](https://www.linkedin.com/in/pedro-baonza-garc%C3%ADa-411b15274/) como parte de su proceso de aprendizaje de desarrollo Android con **Kotlin**, **MVVM** y **Retrofit 2**.
 
 ---
 
-## 🚀 Funcionalidades
+## 🚀 Características
 
-- 🔍 **Búsqueda Rápida:** Encuentra libros fácilmente por título, autor o cualquier palabra clave.
-- 📋 **Listado Detallado:** Muestra una lista clara con portadas, títulos, autores y una breve descripción de cada libro.
-- 📖 **Detalles del Libro:** Información ampliada, incluyendo portada grande, autores y descripción completa.
-- 🌐 **Consumo de APIs REST:** Utilizando Retrofit 2 con Gson para peticiones eficientes y estructuradas.
-
----
-
-## 🎨 Capturas de pantalla
-
-*(Aquí puedes agregar imágenes de tu app funcionando)*
-
-| Pantalla Principal | Pantalla de Detalle |
-|--------------------|---------------------|
-| ![Home](https://via.placeholder.com/250x500.png?text=Lista+de+Libros) | ![Detail](https://via.placeholder.com/250x500.png?text=Detalle+Libro) |
+- 🔍 **Búsqueda de libros** por título, autor o palabra clave.
+- 🧾 **Lista dinámica** con portada, título, autores y descripción.
+- 📘 **Pantalla de detalle** con información ampliada del libro.
+- ⚙️ **Consumo de API REST** con Retrofit 2 y Gson.
+- 💡 **Arquitectura limpia** basada en MVVM.
+- 🖼️ **Carga de imágenes** optimizada con Glide.
 
 ---
 
-## 🛠 Tecnologías
+## 🧠 ¿Qué se aprende con este proyecto?
+
+Este proyecto ha sido diseñado como una forma de poner en práctica conocimientos clave como:
+
+- Uso de **Retrofit 2** para llamadas HTTP.
+- Estructuración de una app con **MVVM** y **LiveData**.
+- Manejo de **coroutines** en llamadas asíncronas.
+- Uso de `RecyclerView` y diseño de interfaces con XML.
+- Implementación de navegación entre pantallas con `Intent`.
+
+---
+
+## 📸 Capturas de pantalla
+
+> *(Puedes añadir aquí capturas reales de la app una vez esté subida a GitHub)*
+
+| Pantalla principal | Resultado búsqueda | Detalle libro |
+|--------------------|--------------------|----------------|
+| ![main](screenshots/main.png) | ![results](screenshots/results.png) | ![detail](screenshots/detail.png) |
+
+---
+
+## 🛠️ Tecnologías utilizadas
 
 - **Kotlin**
-- **Retrofit 2** + **Gson Converter**
-- **MVVM Architecture**
+- **Android SDK**
+- **Retrofit 2**
+- **Gson Converter**
+- **ViewModel + LiveData**
 - **Kotlin Coroutines**
-- **LiveData & ViewModel**
 - **RecyclerView**
-- **Glide** (Carga de imágenes)
-- **Material Design Components**
+- **Glide**
 
 ---
 
-## 📦 Estructura del proyecto
+## 👨‍💻 Sobre el autor
 
-```
-📁 data
-│   ├── api             ← Retrofit interfaces
-│   ├── model           ← Modelos de datos
-│   └── repository      ← Repositorios
-📁 ui
-│   └── main            ← Actividades, ViewModels y Adapters
-│
-📁 utils                ← Utilidades generales
-```
+**Pedro Baonza García**  
+📍 Madrid, España  
+🎓 Estudiante de FP Técnico Superior en Desarrollo de Aplicaciones Multiplataforma  
+📧 [pedrobaonza0115@gmail.com](mailto:pedrobaonza0115@gmail.com)  
+🔗 [LinkedIn](https://www.linkedin.com/in/pedro-baonza-garc%C3%ADa-411b15274/)
+
+> *Apasionado por el desarrollo de software y la tecnología. Con experiencia práctica tanto en el ámbito técnico como en atención al cliente. Actualmente aprendiendo y desarrollando proyectos como este para seguir creciendo como desarrollador.*
 
 ---
 
-## ▶️ Instalación
-
-1. Clona el repositorio:
+## 📦 Cómo clonar el proyecto
 
 ```bash
-git clone https://github.com/tu_usuario/book-explorer.git
+git clone https://github.com/PedroBaonza/BookExplorer.git
+cd BookExplorer
 ```
 
-2. Ábrelo en Android Studio.
+---
 
-3. Construye y ejecuta en tu dispositivo físico o emulador.
+## ✨ Próximas mejoras (To-Do)
+
+- [ ] Guardar favoritos localmente con Room
+- [ ] Añadir animaciones al navegar
+- [ ] Internacionalización (ES / EN)
+- [ ] Mejoras de diseño con Material Design 3
+- [ ] Versión de prueba en APK
 
 ---
 
-## 🌟 Autor
+## 📜 Licencia
 
-👤 **Tu Nombre**
-
-- GitHub: [@tu_usuario](https://github.com/tu_usuario)
-- LinkedIn: [Tu LinkedIn](https://linkedin.com/in/tu_perfil)
+Este proyecto se encuentra bajo la licencia [MIT](LICENSE).
 
 ---
 
-## 📄 Licencia
-
-Este proyecto es open-source y está licenciado bajo MIT License.
+> ⭐️ ¡Si te ha gustado este proyecto, considera dejar una estrella en el repo!
+```
 
 ---
 
-✨ ¡Gracias por visitar! Si te gustó el proyecto, dame una ⭐️ para apoyarme.
+¿Te gustaría que también te cree un banner visual con el nombre de tu app y estilo moderno para colocarlo en el README? Puedo generarlo ahora mismo.
