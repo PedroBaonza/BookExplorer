@@ -4,28 +4,25 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 /**
- * Objeto singleton que se encarga de crear y proveer una instancia de Retrofit configurada.
+ * Singleton que provee una instancia de Retrofit configurada para conectarse a la API de OpenLibrary.
  *
- * Su propósito es centralizar la creación del cliente HTTP para conectarse con la API de Google Books.
- * Se usa el patrón singleton con `object` para que solo haya una instancia de Retrofit en toda la app.
+ * Esta clase asegura que solo exista una instancia de Retrofit en toda la aplicación.
  */
 object RetrofitInstance {
 
-    // URL base de la API de Google Books
-    private const val BASE_URL = "https://www.googleapis.com/"
+    // URL base para todas las llamadas a OpenLibrary
+    private const val BASE_URL = "https://openlibrary.org/"
 
     /**
-     * Instancia de la interfaz GoogleBooksApi.
+     * Instancia del servicio API que implementa GoogleBooksApi.
      *
-     * Se inicializa de forma perezosa (lazy), lo que significa que solo se crea cuando se accede por primera vez.
-     * Retrofit se configura con:
-     * - La URL base de la API
-     * - Un convertidor de JSON (Gson), que convierte automáticamente las respuestas JSON a objetos Kotlin.
+     * - Se inicializa de forma perezosa (lazy): solo se crea cuando se accede por primera vez.
+     * - Usa Gson como convertidor de JSON a objetos Kotlin.
      */
     val api: GoogleBooksApi by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL) // Define la URL base para todas las peticiones
-            .addConverterFactory(GsonConverterFactory.create()) // Conversor para JSON a objetos Kotlin
+            .baseUrl(BASE_URL) // Establece la base de la URL
+            .addConverterFactory(GsonConverterFactory.create()) // Usa Gson para el parsing de JSON
             .build()
             .create(GoogleBooksApi::class.java) // Crea la implementación de la interfaz
     }

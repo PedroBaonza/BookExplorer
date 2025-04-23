@@ -2,27 +2,33 @@ package com.pedrobaonza.bookexplorer.data.repository
 
 import com.pedrobaonza.bookexplorer.data.api.RetrofitInstance
 import com.pedrobaonza.bookexplorer.data.model.BookResponse
+import com.pedrobaonza.bookexplorer.data.model.OpenLibraryMapper
+import retrofit2.Response
 
 /**
- * Repositorio encargado de manejar la lógica de acceso a datos desde la API de Google Books.
+ * Repositorio responsable de obtener datos desde la API de OpenLibrary.
  *
- * Su función es abstraer la fuente de datos (en este caso, la API remota) y proporcionar los datos
- * a otras capas de la aplicación, como el ViewModel.
- *
- * Este enfoque permite desacoplar el origen de los datos del resto de la app y facilita el testing.
+ * Sirve como puente entre la lógica de presentación (ViewModel) y la fuente de datos remota (API).
+ * Al desacoplar estas capas, se facilita el testing y la escalabilidad.
  */
 class BookRepository {
 
     /**
-     * Busca libros según una cadena de texto enviada por el usuario.
+     * Busca libros en la API según un texto introducido por el usuario.
      *
-     * @param query Texto de búsqueda (puede ser título, autor, tema, etc.).
-     * @return Un objeto [BookResponse] que contiene una lista de libros encontrados.
+     * @param query Texto de búsqueda (puede ser un título, autor, etc.).
+     * @return Una respuesta Retrofit con un objeto BookResponse que contiene la lista de libros.
      *
-     * Esta función es `suspend` porque realiza una llamada de red usando Retrofit
-     * y debe ejecutarse dentro de una corrutina para no bloquear el hilo principal.
+     * Esta función se ejecuta dentro de una corrutina (es suspend) para realizar la llamada de red.
      */
-    suspend fun searchBooks(query: String): BookResponse {
-        return RetrofitInstance.api.searchBooks(query)
+    suspend fun searchBooks(query: String): Response<BookResponse> {
+        // Realiza la llamada a la API de OpenLibrary
+        val response = RetrofitInstance.api.searchOpenLibraryBooks(query)
+
+        // Mapea los datos crudos (OpenLibraryBook) a una lista de BookItem
+        val items = OpenLibraryMapper.mapToBookItems(response.docs)
+
+        // Envuelve la lista de BookItem dentro de un BookResponse personalizado
+        return Response.success(BookResponse(items))
     }
 }

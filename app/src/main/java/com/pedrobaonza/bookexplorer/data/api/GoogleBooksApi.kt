@@ -1,30 +1,28 @@
 package com.pedrobaonza.bookexplorer.data.api
 
-import com.pedrobaonza.bookexplorer.data.model.BookResponse
+import com.pedrobaonza.bookexplorer.data.model.OpenLibraryResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 /**
- * Interfaz que define las llamadas a la API de Google Books utilizando Retrofit.
+ * Interfaz que define las llamadas a la API de OpenLibrary mediante Retrofit.
  *
- * Retrofit genera automáticamente la implementación de esta interfaz.
+ * Retrofit genera automáticamente la implementación de esta interfaz en tiempo de ejecución.
+ * Cada función representa un endpoint HTTP.
  */
 interface GoogleBooksApi {
 
     /**
-     * Realiza una petición GET al endpoint de búsqueda de libros de la API de Google Books.
+     * Realiza una búsqueda de libros en OpenLibrary usando el endpoint:
+     * https://openlibrary.org/search.json?q={query}
      *
-     * URL base: https://www.googleapis.com/
-     * Endpoint completo: books/v1/volumes?q={query}
+     * @param query Texto a buscar (título, autor, tema...).
+     * @return Objeto de tipo OpenLibraryResponse con la lista de libros encontrados.
      *
-     * @param query Texto que se desea buscar (por ejemplo: "Harry Potter").
-     * @return Un objeto [BookResponse] que contiene una lista de libros que coinciden con la búsqueda.
-     *
-     * La función es `suspend` porque se ejecuta dentro de una corrutina (Kotlin Coroutine),
-     * lo que permite hacer llamadas asíncronas sin bloquear el hilo principal.
+     * Es una función suspendida para ejecutarse de forma asíncrona con corrutinas.
      */
-    @GET("books/v1/volumes")
-    suspend fun searchBooks(
+    @GET("search.json")
+    suspend fun searchOpenLibraryBooks(
         @Query("q") query: String
-    ): BookResponse
+    ): OpenLibraryResponse
 }
