@@ -11,58 +11,57 @@ import com.pedrobaonza.bookexplorer.databinding.ActivityMainBinding
 /**
  * Actividad principal de la aplicación.
  *
- * Esta pantalla permite al usuario buscar libros mediante un campo de texto.
- * Muestra los resultados en un RecyclerView, y al seleccionar un libro, abre
- * la pantalla de detalle.
+ * Permite al usuario buscar libros, ver resultados y navegar al detalle de un libro.
  */
 class MainActivity : AppCompatActivity() {
 
-    // ViewBinding para acceder a las vistas del layout de forma segura
+    // ViewBinding para acceder a las vistas de forma segura sin findViewById
     private lateinit var binding: ActivityMainBinding
 
-    // ViewModel que contiene la lógica de negocio y maneja la búsqueda de libros
+    // ViewModel asociado a esta actividad. Se usa para acceder a los datos y lógica de negocio.
     private val viewModel: MainViewModel by viewModels()
 
-    // Adaptador del RecyclerView
+    // Adaptador del RecyclerView encargado de mostrar los libros
     private lateinit var bookAdapter: BookAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Inflamos el layout usando ViewBinding
+        // Infla el layout XML con ViewBinding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Configura el RecyclerView y su adaptador
+        // Configura el RecyclerView
         setupRecyclerView()
 
-        // Observa los resultados de búsqueda desde el ViewModel
+        // Observa la lista de libros en tiempo real
         viewModel.books.observe(this) { books ->
             bookAdapter.updateData(books)
         }
 
-        // Observa posibles errores desde el ViewModel
+        // Muestra errores como mensajes Toast
         viewModel.error.observe(this) { err ->
             Toast.makeText(this, err, Toast.LENGTH_SHORT).show()
         }
 
-        // Ejecuta la búsqueda al pulsar "enter" en el campo de texto
+        // Ejecuta la búsqueda cuando el usuario pulsa "enter" en el campo de búsqueda
         binding.etSearch.setOnEditorActionListener { v, _, _ ->
             val query = v.text.toString().trim()
             if (query.isNotEmpty()) {
                 viewModel.searchBooks(query)
             }
-            true
+            true // Indica que el evento ha sido manejado
         }
     }
 
     /**
-     * Configura el RecyclerView: inicializa el adaptador, define el layout
-     * y gestiona el clic sobre un libro para abrir la pantalla de detalle.
+     * Configura el RecyclerView: asigna el adaptador, el layout manager
+     * y el comportamiento al hacer clic en un libro.
      */
     private fun setupRecyclerView() {
-        // Inicializa el adaptador con una lista vacía y una función para manejar clics
+        // Crea el adaptador con una lambda para manejar los clics en ítems
         bookAdapter = BookAdapter(emptyList()) { book ->
+            // Crea un Intent para abrir DetailActivity con los datos del libro
             val intent = Intent(this, DetailActivity::class.java).apply {
                 putExtra("title", book.volumeInfo.title)
                 putExtra("author", book.volumeInfo.authors?.joinToString(", "))
@@ -72,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Asigna el adaptador y el layout manager al RecyclerView
+        // Configura el RecyclerView con el adaptador y un layout vertical
         binding.rvBooks.apply {
             adapter = bookAdapter
             layoutManager = LinearLayoutManager(this@MainActivity)

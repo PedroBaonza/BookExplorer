@@ -10,13 +10,13 @@ import com.pedrobaonza.bookexplorer.databinding.ItemBookBinding
 /**
  * Adaptador personalizado para mostrar una lista de libros en un RecyclerView.
  *
- * Este adaptador se encarga de:
+ * Se encarga de:
  * - Inflar el layout del ítem (item_book.xml).
- * - Asignar los datos de cada libro a los componentes visuales.
- * - Capturar clics en cada ítem para mostrar detalles.
+ * - Asignar datos del libro a los elementos visuales.
+ * - Detectar clics sobre cada libro para navegar a los detalles.
  *
- * @param books Lista de objetos BookItem que se van a mostrar.
- * @param onItemClick Función lambda que se ejecuta cuando el usuario pulsa sobre un libro.
+ * @param books Lista de libros a mostrar.
+ * @param onItemClick Acción que se ejecuta al pulsar un libro.
  */
 class BookAdapter(
     private var books: List<BookItem>,
@@ -24,13 +24,14 @@ class BookAdapter(
 ) : RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
     /**
-     * ViewHolder que contiene el binding del ítem individual (ItemBookBinding).
+     * ViewHolder que representa cada ítem del RecyclerView.
+     * Contiene el binding de la vista de ítem.
      */
     inner class BookViewHolder(val binding: ItemBookBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     /**
-     * Infla el layout del ítem y crea una nueva instancia de ViewHolder.
+     * Crea un nuevo ViewHolder inflando el layout del ítem.
      */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
         val binding = ItemBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -38,31 +39,31 @@ class BookAdapter(
     }
 
     /**
-     * Devuelve la cantidad de ítems en la lista.
+     * Devuelve la cantidad total de libros en la lista.
      */
     override fun getItemCount(): Int = books.size
 
     /**
-     * Asigna los datos de cada libro a los elementos visuales del ítem.
+     * Asigna los datos de un libro a su vista correspondiente.
      */
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
         val book = books[position]
         holder.binding.apply {
-            // Título del libro
+            // Título
             tvTitle.text = book.volumeInfo.title
 
-            // Autores, unidos por coma si hay más de uno
-            tvAuthor.text = book.volumeInfo.authors?.joinToString(", ") ?: "Unknown"
+            // Autores (si hay más de uno, se separan por comas)
+            tvAuthor.text = book.volumeInfo.authors?.joinToString(", ") ?: "Autor desconocido"
 
-            // Descripción corta del libro
-            tvDescription.text = book.volumeInfo.description ?: "No description"
+            // Descripción breve
+            tvDescription.text = book.volumeInfo.description ?: "Sin descripción"
 
-            // Carga de imagen usando Glide
+            // Carga de imagen de portada (si existe)
             Glide.with(imgCover.context)
                 .load(book.volumeInfo.imageLinks?.thumbnail)
                 .into(imgCover)
 
-            // Listener para ir al detalle del libro
+            // Acción al hacer clic: lanza la función que viene por parámetro
             root.setOnClickListener {
                 onItemClick(book)
             }
@@ -70,9 +71,9 @@ class BookAdapter(
     }
 
     /**
-     * Actualiza la lista de libros mostrados y refresca el RecyclerView.
+     * Actualiza la lista de libros y notifica al RecyclerView para redibujar.
      *
-     * @param newBooks Nueva lista de libros a mostrar.
+     * @param newBooks Nueva lista de libros.
      */
     fun updateData(newBooks: List<BookItem>) {
         books = newBooks
