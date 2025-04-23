@@ -1,91 +1,46 @@
+# 📚 BookExplorer
 
-# 📚 Book Explorer
-
-**Book Explorer** es una aplicación Android creada como proyecto práctico para explorar libros a través de la API pública de Google Books. Esta app ha sido desarrollada por [Pedro Baonza](https://www.linkedin.com/in/pedro-baonza-garc%C3%ADa-411b15274/) como parte de su proceso de aprendizaje de desarrollo Android con **Kotlin**, **MVVM** y **Retrofit 2**.
-
----
-
-## 🚀 Características
-
-- 🔍 **Búsqueda de libros** por título, autor o palabra clave.
-- 🧾 **Lista dinámica** con portada, título, autores y descripción.
-- 📘 **Pantalla de detalle** con información ampliada del libro.
-- ⚙️ **Consumo de API REST** con Retrofit 2 y Gson.
-- 💡 **Arquitectura limpia** basada en MVVM.
-- 🖼️ **Carga de imágenes** optimizada con Glide.
+BookExplorer es una aplicación Android desarrollada en Kotlin que permite a los usuarios buscar libros mediante la API de [OpenLibrary](https://openlibrary.org/developers/api). La app muestra los resultados en un RecyclerView y permite consultar información detallada de cada libro seleccionado.
 
 ---
 
-## 🧠 ¿Qué se aprende con este proyecto?
+## 🚀 Funcionalidades principales
 
-Este proyecto ha sido diseñado como una forma de poner en práctica conocimientos clave como:
-
-- Uso de **Retrofit 2** para llamadas HTTP.
-- Estructuración de una app con **MVVM** y **LiveData**.
-- Manejo de **coroutines** en llamadas asíncronas.
-- Uso de `RecyclerView` y diseño de interfaces con XML.
-- Implementación de navegación entre pantallas con `Intent`.
-
----
-
-## 📸 Capturas de pantalla
-
-> *(Puedes añadir aquí capturas reales de la app una vez esté subida a GitHub)*
-
-| Pantalla principal | Resultado búsqueda | Detalle libro |
-|--------------------|--------------------|----------------|
-| ![main](screenshots/main.png) | ![results](screenshots/results.png) | ![detail](screenshots/detail.png) |
+- 🔍 **Búsqueda de libros** por título, autor o tema.
+- 📚 **Visualización de resultados** en una lista elegante con imágenes, títulos y descripciones.
+- 📄 **Pantalla de detalle** para cada libro con portada, autor, descripción y más.
+- ⚙️ Arquitectura **MVVM** limpia y modular.
+- ⚡ **Optimización de búsqueda** con debounce (evita llamadas excesivas a la API).
+- 🔗 Uso de Retrofit para conectarse a la API de OpenLibrary.
+- 📦 Transformación de datos mediante un `Mapper` dedicado.
 
 ---
 
-## 🛠️ Tecnologías utilizadas
+## 🧱 Tecnologías utilizadas
 
-- **Kotlin**
-- **Android SDK**
-- **Retrofit 2**
-- **Gson Converter**
-- **ViewModel + LiveData**
-- **Kotlin Coroutines**
-- **RecyclerView**
-- **Glide**
-
----
-
-## 👨‍💻 Sobre el autor
-
-**Pedro Baonza García**  
-📍 Madrid, España  
-🎓 Estudiante de FP Técnico Superior en Desarrollo de Aplicaciones Multiplataforma  
-📧 [pedrobaonza0115@gmail.com](mailto:pedrobaonza0115@gmail.com)  
-🔗 [LinkedIn](https://www.linkedin.com/in/pedro-baonza-garc%C3%ADa-411b15274/)
-
-> *Apasionado por el desarrollo de software y la tecnología. Con experiencia práctica tanto en el ámbito técnico como en atención al cliente. Actualmente aprendiendo y desarrollando proyectos como este para seguir creciendo como desarrollador.*
+- 🧠 **MVVM (Model-View-ViewModel)**
+- 🔌 **Retrofit 2** - Cliente HTTP para Android
+- 💨 **Kotlin Coroutines** - Asincronía simplificada
+- 🧪 **LiveData** - Observabilidad de datos
+- 🧼 **ViewBinding** - Manejo seguro y limpio de vistas
+- 🖼️ **Glide** - Carga de imágenes eficiente
+- 🌐 **OpenLibrary API** - Fuente de datos abiertos de libros
 
 ---
 
-## 📦 Cómo clonar el proyecto
+## 🧠 Arquitectura y flujo de la app
 
-```bash
-git clone https://github.com/PedroBaonza/BookExplorer.git
-cd BookExplorer
-```
+La app sigue el patrón MVVM, que permite una clara separación de responsabilidades:
 
----
-
-## ✨ Próximas mejoras (To-Do)
-
-- [ ] Guardar favoritos localmente con Room
-- [ ] Añadir animaciones al navegar
-- [ ] Internacionalización (ES / EN)
-- [ ] Mejoras de diseño con Material Design 3
-- [ ] Versión de prueba en APK
-
----
-
-## 📜 Licencia
-
-Este proyecto se encuentra bajo la licencia [MIT](LICENSE).
-
----
-
-> ⭐️ ¡Si te ha gustado este proyecto, considera dejar una estrella en el repo!
+```plaintext
+MainActivity (View)
+  └── observa libros y errores del ViewModel
+  └── lanza búsqueda al ViewModel
+      └── MainViewModel
+            └── llama a BookRepository
+                  └── RetrofitInstance.api.searchOpenLibraryBooks()
+                      └── recibe JSON (OpenLibraryResponse)
+                          └── OpenLibraryMapper → transforma a BookItem
+            └── expone resultados como LiveData
+  └── BookAdapter → renderiza libros en RecyclerView
+  └── Clic en libro → DetailActivity (muestra datos)
